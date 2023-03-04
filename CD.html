@@ -51,7 +51,7 @@
     
     <div id="counter">
     <h3>
-        Office Time Left This Week (If no OTs :D)
+        <span id="weekday-msg"></span>
     </h3>
     
         <h2 class="box" id="days"></h2>
@@ -62,35 +62,53 @@
 
 
 <script>
-    function CountDownTimer  () {
-    left_days = document.getElementById("days");
-    left_hours = document.getElementById("hours");
-    left_minutes = document.getElementById("minutes");
- 
+    function CountDownTimer() {
+        left_days = document.getElementById("days");
+        left_hours = document.getElementById("hours");
+        left_minutes = document.getElementById("minutes");
+        weekday_msg = document.getElementById("weekday-msg");
     }
-    function showRemaining (){
-    now = new Date();
-    // days_in_this_month = new Date( now.getFullYear(), now.getMonth()+1, 0).getDate(); 
-    // week starts on Monday
-   
-    if(now.getDay() == 6 || now.getDay() == 0 ){
-      days = 0;
-      hours = 0;
-      minutes = 0;
-    }
-    else{
-      d = now.getDay() - 1;
-      days = 4 - d;
-      hours = 23 - now.getHours();
-      minutes = 59 - now.getMinutes();
-    }
-    left_days.innerHTML = days + "<br> <span class=\"small\"> days </span>"
-    left_hours.innerHTML = hours + "<br> <span class=\"small\"> hours</span>";
-    left_minutes.innerHTML = minutes + "<br> <span class=\"small\">mins</span>";
-    }
-
-timer = setInterval (showRemaining, 1000) 
-CountDownTimer() ;
-</script>
-</body>
-</html>
+    
+    function showRemaining() {
+        now = new Date();
+        // days_in_this_month = new Date( now.getFullYear(), now.getMonth()+1, 0).getDate(); 
+        // week starts on Monday
+        
+        var days;
+        var hours;
+        var minutes;
+        var weekday;
+        
+        if(now.getDay() == 0 || now.getDay() == 6) {
+            days = 0;
+            hours = 0;
+            minutes = 0;
+            
+            if(now.getDay() == 0) {
+                weekday = "Sunday";
+            } else {
+                weekday = "Saturday";
+            }
+            weekday_msg.innerHTML = "Holiday :D - Today is " + weekday;
+        } else {
+            if(now.getDay() == 1) {
+                days = 4;
+            } else if(now.getDay() == 2) {
+                days = 3;
+            } else if(now.getDay() == 3) {
+                days = 2;
+            } else if(now.getDay() == 4) {
+                days = 1;
+            } else {
+                days = 0;
+            }
+            
+            hours = 23 - now.getHours();
+            minutes = 59 - now.getMinutes();
+            
+            weekday_msg.innerHTML = "Office Time Left - Today is " + ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"][now.getDay() - 1];
+        }
+        
+        left_days.innerHTML = days + "<br> <span class=\"small\"> days </span>"
+        left_hours.innerHTML = hours + "<br> <span class=\"small\"> hours</span>";
+        left_minutes.innerHTML = minutes + "<
