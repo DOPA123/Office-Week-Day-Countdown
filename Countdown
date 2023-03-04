@@ -1,0 +1,46 @@
+import requests
+import datetime
+import pytz
+
+# Replace with your own Notion API key and database ID
+api_key = "YOUR_API_KEY"
+database_id = "YOUR_DATABASE_ID"
+
+# Get the current time in the UTC timezone
+utc_now = datetime.datetime.now(pytz.utc)
+
+# Calculate the number of hours left in the week from Monday to Friday
+start_of_week = utc_now - datetime.timedelta(days=utc_now.weekday())
+end_of_week = start_of_week + datetime.timedelta(days=4)
+hours_left = (end_of_week - utc_now).total_seconds() // 3600
+
+# Format the countdown message
+countdown_message = f"{hours_left:.0f} hours left in the week from {start_of_week.strftime('%B %d')} to {end_of_week.strftime('%B %d')}"
+
+# Use the Notion API to update the widget in your database
+url = f"https://api.notion.com/v1/blocks/{database_id}"
+headers = {
+    "Notion-Version": "2022-02-07",
+    "Authorization": f"Bearer {api_key}",
+    "Content-Type": "application/json",
+}
+payload = {
+    "children": [
+        {
+            "object": "block",
+            "type": "embed",
+            "embed": {
+                "url": "https://your-countdown-widget.com",
+                "caption": {
+                    "text": [
+                        {
+                            "type": "text",
+                            "text": countdown_message,
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
+response = requests.patch(url, headers=headers, json=payload)
