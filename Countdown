@@ -1,46 +1,93 @@
-import requests
-import datetime
-import pytz
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-# Replace with your own Notion API key and database ID
-api_key = "YOUR_API_KEY"
-database_id = "YOUR_DATABASE_ID"
-
-# Get the current time in the UTC timezone
-utc_now = datetime.datetime.now(pytz.utc)
-
-# Calculate the number of hours left in the week from Monday to Friday
-start_of_week = utc_now - datetime.timedelta(days=utc_now.weekday())
-end_of_week = start_of_week + datetime.timedelta(days=4)
-hours_left = (end_of_week - utc_now).total_seconds() // 3600
-
-# Format the countdown message
-countdown_message = f"{hours_left:.0f} hours left in the week from {start_of_week.strftime('%B %d')} to {end_of_week.strftime('%B %d')}"
-
-# Use the Notion API to update the widget in your database
-url = f"https://api.notion.com/v1/blocks/{database_id}"
-headers = {
-    "Notion-Version": "2022-02-07",
-    "Authorization": f"Bearer {api_key}",
-    "Content-Type": "application/json",
-}
-payload = {
-    "children": [
-        {
-            "object": "block",
-            "type": "embed",
-            "embed": {
-                "url": "https://your-countdown-widget.com",
-                "caption": {
-                    "text": [
-                        {
-                            "type": "text",
-                            "text": countdown_message,
-                        }
-                    ]
-                }
-            }
+    <title>Time Left this week</title>
+    <style>
+        
+        body{
+            text-align: center;
+            font-family: monospace;
+            background-color: #fff;
         }
-    ]
-}
-response = requests.patch(url, headers=headers, json=payload)
+        .box{
+            display: inline-block;
+            display: inline-block;
+            padding: 10px;
+            border-radius: 5px;
+            min-width: 40px;
+            height: 40px;
+            border: 3px solid #000000;
+            border-radius: 5px;
+            box-shadow: 2px 2px 1px 0px #000000;
+        }
+      
+        h2{
+            display: inline-block;
+            margin-right: 10px;
+            margin-block-start: 5px;
+        }
+        h3{
+            text-align: left;
+            display: inline-block;
+            
+        }
+        .small{
+            font-size: 15px;
+            font-weight: lighter;
+        }
+
+        #days{
+            background-color:  #f3fff3; ;
+        }
+
+
+    </style>
+</head>
+<body>
+    
+    <div id="counter">
+   
+    <div>
+        <h2 class="box" id="days"></h2>
+        <h2 class="box" id="hours"></h2>
+        <h2 class="box" id="minutes"></h2>
+        <h2 class="box" id="seconds"></h2>
+
+        <h3>
+            Left in <br>This Week
+        </h3>
+    </div>
+       
+    </div>
+
+
+
+<script>
+    function CountDownTimer  () {
+    left_days = document.getElementById("days");
+    left_hours = document.getElementById("hours");
+    left_minutes = document.getElementById("minutes");
+    left_seconds = document.getElementById("seconds");
+ 
+    }
+    function showRemaining (){
+    now = new Date();
+ 
+    days = 6 - now.getDay(); ;
+    hours = 23 - now.getHours();
+    minutes = 59 - now.getMinutes();
+    seconds = 59 - now.getSeconds();
+    left_days.innerHTML = days + "<br> <span class=\"small\"> days </span>"
+    left_hours.innerHTML = hours + "<br> <span class=\"small\"> hours</span>";
+    left_minutes.innerHTML = minutes + "<br> <span class=\"small\">mins</span>";
+    left_seconds.innerHTML = seconds + "<br> <span class=\"small\">secs</span>";
+    }
+
+timer = setInterval (showRemaining, 1000) 
+CountDownTimer() ;
+</script>
+</body>
+</html>
