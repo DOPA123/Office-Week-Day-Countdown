@@ -1,14 +1,72 @@
-<div class="timeuntil-countdown" data-datetime="next friday 5:00pm" data-timezone="UTC">
-    <div class="timeuntil-countdown-labels">
-        <span class="timeuntil-countdown-days-label">Days</span>
-        <span class="timeuntil-countdown-hours-label">Hours</span>
-        <span class="timeuntil-countdown-minutes-label">Minutes</span>
-        <span class="timeuntil-countdown-seconds-label">Seconds</span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap" rel="stylesheet">
+    <title>Time Left this week</title>
+    <style>
+        body{
+            text-align: center;
+            font-family: 'Fjalla One', sans-serif;
+            background-color: #fff;
+        }
+        .box{
+            display: inline-block;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            min-width: 40px;
+        }
+        #days{
+            background-color:#0f4d4f;
+        }
+        #hours{
+            background-color:#4CAF50;
+        }
+        #minutes{
+            background-color:#76250b;
+        }
+        h2{
+            display: inline-block;
+            margin-right: 10px;
+            margin-block-start: 5px;
+        }
+        h3{
+            text-align: center;
+        }
+        .small{
+            font-size: 15px;
+            font-weight: lighter;
+        }
+    </style>
+</head>
+<body>
+    <div id="counter">
+        <h3>Time left from Monday to Friday this week</h3>
+        <h2 class="box" id="days"></h2>
+        <h2 class="box" id="hours"></h2>
+        <h2 class="box" id="minutes"></h2>
     </div>
-    <div class="timeuntil-countdown-timer">
-        <span class="timeuntil-countdown-days"></span>
-        <span class="timeuntil-countdown-hours"></span>
-        <span class="timeuntil-countdown-minutes"></span>
-        <span class="timeuntil-countdown-seconds"></span>
-    </div>
-</div>
+    <script>
+        function CountDownTimer() {
+            left_days = document.getElementById("days");
+            left_hours = document.getElementById("hours");
+            left_minutes = document.getElementById("minutes");
+        }
+        function showRemaining() {
+            now = new Date();
+            // Get the number of days left from Monday to Friday
+            // Sunday is 0, Monday is 1, Tuesday is 2, etc.
+            days = (5 - now.getDay()) % 7;
+            hours = days * 24 + (24 - now.getHours() - 1);
+            minutes = 59 - now.getMinutes();
+            left_days.innerHTML = days + "<br><span class=\"small\">days</span>";
+            left_hours.innerHTML = hours + "<br><span class=\"small\">hours</span>";
+            left_minutes.innerHTML = minutes + "<br><span class=\"small\">mins</span>";
+        }
+        timer = setInterval(showRemaining, 1000);
+        CountDownTimer();
+    </script>
+</body>
+</html>
