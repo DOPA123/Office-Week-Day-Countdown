@@ -1,34 +1,29 @@
 <!-- TradingView Widget BEGIN -->
 <div class="tradingview-widget-container">
-  <div class="tradingview-widget-container__widget"></div>
-  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NYSE-FCN/" rel="noopener" target="_blank"><span class="blue-text">FCN stock price</span></a> by TradingView</div>
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+  <div id="tradingview_f8fb1"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NYSE-FCN/" rel="noopener" target="_blank"><span class="blue-text">FCN stock chart</span></a> by TradingView</div>
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+  new TradingView.widget(
   {
-  "symbols": [
-    [
-      "NYSE:FCN|12M"
-    ]
-  ],
-  "chartOnly": false,
-  "width": 1000,
-  "height": 500,
+  "autosize": true,
+  "symbol": "NYSE:FCN",
+  "interval": "D",
+  "timezone": "Etc/UTC",
+  "theme": "light",
+  "style": "1",
   "locale": "en",
-  "colorTheme": "light",
-  "autosize": false,
-  "showVolume": true,
-  "showMA": false,
-  "hideDateRanges": false,
-  "hideMarketStatus": false,
-  "hideSymbolLogo": false,
-  "scalePosition": "right",
-  "scaleMode": "Normal",
-  "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
-  "fontSize": "10",
-  "noTimeScale": false,
-  "valuesTracking": "1",
-  "changeMode": "price-and-percent",
-  "chartType": "line"
+  "toolbar_bg": "#f1f3f6",
+  "enable_publishing": false,
+  "withdateranges": true,
+  "hide_side_toolbar": false,
+  "allow_symbol_change": true,
+  "studies": [
+    "STD;Bollinger_Bands"
+  ],
+  "container_id": "tradingview_f8fb1"
 }
+  );
   </script>
 </div>
 <!-- TradingView Widget END -->
